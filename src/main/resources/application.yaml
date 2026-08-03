@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: SiteFinenceiro
+  datasource:
+    url: jdbc:mysql://localhost:3306/financeiro
+    username: ray
+    password: rayjir
+    driver-class-name: org.mysql.Driver
