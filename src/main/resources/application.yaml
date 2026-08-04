@@ -2,7 +2,11 @@ spring:
   application:
     name: SiteFinenceiro
   datasource:
-    url: jdbc:mysql://localhost:3306/financeiro
-    username: ray
-    password: rayjir
-    driver-class-name: org.mysql.Driver
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+    

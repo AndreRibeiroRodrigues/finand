@@ -1,32 +1,44 @@
 package io.Rayjir.SiteFinenceiro.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.ToString;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Table
+@ToString
+@Entity
+@Table(name="despesas")
 public class Despesa {
-    @Column
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-    @Column
+    @Column(nullable = false)
     private Date date;
-    @Column
+    @Column(nullable=false)
     private String despesa;
-    @Column
+    @Column(nullable=false)
     private Double valor;
-    @Column
+    @Column(nullable=false)
     private FormaPagamento formaPagamento;
+    @Column(nullable=false)
+    private Status status;
     @Column
     private String observacao;
-    @Column
-    private Status status;
 
 }
