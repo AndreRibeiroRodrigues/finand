@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,15 +32,21 @@ public class Despesa {
     private UUID id;
     @Column(nullable = false)
     private Date date;
-    @Column(nullable=false)
-    private String despesa;
-    @Column(nullable=false)
-    private Double valor;
-    @Column(nullable=false)
-    private FormaPagamento formaPagamento;
-    @Column(nullable=false)
+    @Column(nullable = false)
+    private String category;
+    @Column(nullable = false)
+    private String subcategory;
+    @Column(nullable = false)
+    private String description;
+    @Column(nullable = false)
+    private double value;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
-    @Column
-    private String observacao;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "payment_method")
+    private FormaPagamento paymentMethod;
+    @Column(nullable = false)
+    private String observation;
 
 }
