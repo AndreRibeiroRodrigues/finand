@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
 
 @RestController
-@RequestMapping("/despesa")
+@RequestMapping("/api/despesas")
 public class FinanceiroController {
 
     private final FinanceiroRepository financeiroRepository;
@@ -31,8 +33,9 @@ public class FinanceiroController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/get")
     public ResponseEntity<List<Despesa>> getDespesas() {
+        System.out.println("get");
         return ResponseEntity.ok(financeiroRepository.findAll());
     }
     
@@ -52,11 +55,9 @@ public class FinanceiroController {
         System.out.println("Despesa recebida: " + despesaSalva);
         return new ResponseEntity<>(despesaSalva, HttpStatus.CREATED);
     }
-    
 
     @DeleteMapping
     public String deletePath(@RequestBody int id){
-
         return "Despesa deletada";
     }
 }
