@@ -39,18 +39,6 @@
       return []; 
     } 
   }
-  
-  async function saveEntries(entry) { 
-    const API_URL = window.location.origin === "http://localhost:8080"
-     ? "http://localhost:8080"
-      : "https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev";
-    await fetch(`${API_URL}/api/despesas/postDespesa`, {
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify(entry) 
-    });
-
-  }
 
   function escapeHtml(value) { 
     const div = document.createElement('div'); 
@@ -112,7 +100,9 @@
       $('#date').value = entry.date; $('#category').value = entry.category; $('#subcategory').value = entry.subcategory;
       $('#description').value = entry.description; $('#amount').value = entry.amount; $('#paid').value = String(entry.paid);
       $('#paymentMethod').value = entry.paymentMethod; $('#notes').value = entry.notes;
-    } else { $('#date').value = new Date().toISOString().slice(0, 10); }
+    } else { 
+      $('#date').value = new Date().toISOString().slice(0, 10); 
+    }
     elements.modal.hidden = false;
     document.body.style.overflow = 'hidden';
     setTimeout(() => $('#date').focus(), 0);
@@ -123,40 +113,103 @@
     lastFocusedElement?.focus(); 
   }
 
-  elements.form.addEventListener('submit', async (event) => {
+  elements.form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const id = $('#entryId').value;
-    const entry = { 
-      date: $('#date').value, 
-      category: $('#category').value.trim(), 
-      subcategory: $('#subcategory').value.trim(), 
-      description: $('#description').value.trim(), 
-      value: Number($('#amount').value), 
-      status: $('#paid').value === 'true', 
-      paymentMethod: $('#paymentMethod').value, 
-      observation: $('#notes').value.trim() 
+
+    
+
+    const id = $("#entryId").value;
+
+    const entry = {
+        data: $("#date").value,
+        categoria: $("#category").value.trim(),
+        subcategoria: $("#subcategory").value.trim(),
+        descricao: $("#description").value.trim(),
+        valor: Number($("#amount").value),
+        pago: $("#paid").value === "true",
+        formaPagamento: $("#paymentMethod").value,
+        observacao: $("#notes").value.trim()
     };
 
-        console.log(entry);
+    try {
+        
+      const API_URL = window.location.origin === "http://localhost:8080"
+          ? "http://localhost:8080"
+          : "https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev";
 
-    if (id) entries = await entries.map((item) => item.id === id ? entry : item); 
-    else saveEntries(entry);
-     
-    render(); 
-    closeModal(); 
-    showToast(id ? 'Lançamento atualizado.' : 'Lançamento adicionado.');
+        const method = id
+            ? "PUT"
+            : "POST";
+
+        const response = await fetch(`${API_URL}/api/despesas/postDespesa`, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(entry)
+        });
+
+        if (!response.ok) {
+            const mensagemErro = await response.text();
+
+            throw new Error(
+                mensagemErro ||
+                `Erro HTTP: ${response.status}`
+            );
+        }
+
+        const entrySalva = await response.json();
+
+        if (id) {
+            entries = entries.map((item) =>
+                String(item.id) === String(id)
+                    ? entrySalva
+                    : item
+            );
+        } else {
+            entries.push(entrySalva);
+        }
+
+        render();
+        closeModal();
+
+        showToast(
+            id
+                ? "Lançamento atualizado."
+                : "Lançamento adicionado."
+        );
+
+        elements.form.reset();
+
+    } catch (error) {
+        console.error("Erro ao salvar lançamento:", error);
+
+        showToast("Não foi possível salvar o lançamento.");
+    }
   });
   elements.body.addEventListener('click', async (event) => {
+
+    const API_URL = window.location.origin === "http://localhost:8080"
+          ? "http://localhost:8080"
+          : "https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev";
+
     const button = event.target.closest('[data-action]'); if (!button) return;
-    const entry = await entries.find((item) => item.id === button.dataset.id); if (!entry) return;
+    const entry = entries.find((item) => item.id === button.dataset.id); if (!entry) return;
     if (button.dataset.action === 'edit') openModal(entry);
     if (button.dataset.action === 'delete' && confirm(`Excluir “${entry.description}”?`)) { 
-      entries = entries.filter((item) => item.id !== entry.id); 
+      await fetch(`${API_URL}/api/despesas/${id}`, {
+        method: "DELETE"
+        
+      });
+      
       saveEntries(); 
       render(); 
       showToast('Lançamento excluído.'); 
     }
   });
+  
   $('#newEntryButton').addEventListener('click', () => openModal());
   $('#closeModalButton').addEventListener('click', closeModal); 
   $('#cancelButton').addEventListener('click', closeModal);

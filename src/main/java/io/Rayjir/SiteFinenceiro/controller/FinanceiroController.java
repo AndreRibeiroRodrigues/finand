@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.UUID;
 
 
-
-
-
 @RestController
 @RequestMapping("/api/despesas")
 public class FinanceiroController {
