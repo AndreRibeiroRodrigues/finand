@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -50,9 +49,8 @@ public class FinanceiroController {
 
     @PostMapping("postDespesa")
     public ResponseEntity<Despesa> postDespesa(@RequestBody Despesa entity) {
-        //TODO: process POST request
+        System.out.println("Despesa recebida: " + entity);
         Despesa despesaSalva = financeiroRepository.save(entity);
-        System.out.println("Despesa recebida: " + despesaSalva);
         return new ResponseEntity<>(despesaSalva, HttpStatus.CREATED);
     }
 

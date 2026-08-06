@@ -18,10 +18,17 @@
   let entries = loadEntries();
   let lastFocusedElement = null;
 
+  
+  
   async function loadEntries() {
-    const URL = 'https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev/api/despesas/get';
+    
+    const API_URL = window.location.origin === "http://localhost:8080"
+      ? "http://localhost:8080"
+      : "https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev";
+    
+    console.log(API_URL);
     try { 
-      const response = await fetch(URL);
+      const response = await fetch(`${API_URL}/api/despesas/get`);
       if(!response.ok){
         throw new Error(`Response status: ${response.status}`)
       }
@@ -33,8 +40,16 @@
     } 
   }
   
-  function saveEntries() { 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); 
+  async function saveEntries(entry) { 
+    const API_URL = window.location.origin === "http://localhost:8080"
+     ? "http://localhost:8080"
+      : "https://scaling-umbrella-7xq4pp7w9rrcrq97-8080.app.github.dev";
+    await fetch(`${API_URL}/api/despesas/postDespesa`, {
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify(entry) 
+    });
+
   }
 
   function escapeHtml(value) { 
@@ -61,16 +76,11 @@
 
   async function render() {
     const query = elements.search.value.trim().toLocaleLowerCase('pt-BR');
-    // const filtered = entries.filter(
-    //   (entry) => Object.values(entry).some(
-    //     (value) => String(value).toLocaleLowerCase('pt-BR').includes(query)
-    //   )
-    // );
 
     console.log(entries);
     const filtered = await entries
     elements.body.innerHTML = filtered.map((entry) => {
-      const date = new Date(`${entry.date}T12:00:00`);
+      // const date = new Date(`${entry.date}T12:00:00`);
       return `<tr>
         <td>${formatDate(entry.date)}</td>
         <td>${escapeHtml(entry.category)}</td>
@@ -80,13 +90,17 @@
         <td><span class="badge ${entry.status ? 'yes' : 'no'}">${entry.paid ? 'Sim' : 'Não'}</span></td>
         <td>${escapeHtml(entry.paymentMethod)}</td>
         <td>${escapeHtml(entry.notes || '—')}</td>
-        <td><div class="actions"><button class="icon-button" data-action="edit" data-id="${entry.id}" type="button">Editar</button><button class="icon-button danger" data-action="delete" data-id="${entry.id}" type="button">Excluir</button></div></td>
+        <td><div class="actions">
+        <button class="icon-button" data-action="edit" data-id="${entry.id}" type="button">Editar</button>
+        <button class="icon-button danger" data-action="delete" data-id="${entry.id}" type="button">Excluir</button>
+        </div>
+        </td>
       </tr>`;
     }).join('');
     elements.empty.hidden = filtered.length > 0;
-    elements.count.textContent = entries.length;
-    elements.total.textContent = formatCurrency(entries.reduce((sum, entry) => sum + Number(entry.amount), 0));
-    elements.result.textContent = `${filtered.length} ${filtered.length === 1 ? 'registro' : 'registros'}`;
+    elements.count.textContent =  filtered.length;
+    elements.total.textContent = formatCurrency( filtered.reduce((sum, entry) => sum + Number(entry.value), 0));
+    elements.result.textContent = `${ filtered.length} ${ filtered.length === 1 ? 'registro' : 'registros'}`;
   }
 
   function openModal(entry = null) {
@@ -109,7 +123,7 @@
     lastFocusedElement?.focus(); 
   }
 
-  elements.form.addEventListener('submit', (event) => {
+  elements.form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const id = $('#entryId').value;
     const entry = { 
@@ -117,21 +131,24 @@
       category: $('#category').value.trim(), 
       subcategory: $('#subcategory').value.trim(), 
       description: $('#description').value.trim(), 
-      amount: Number($('#amount').value), 
-      paid: $('#paid').value === 'true', 
+      value: Number($('#amount').value), 
+      status: $('#paid').value === 'true', 
       paymentMethod: $('#paymentMethod').value, 
-      notes: $('#notes').value.trim() 
+      observation: $('#notes').value.trim() 
     };
-    if (id) entries = entries.map((item) => item.id === id ? entry : item); 
-    else entries.unshift(entry);
-    saveEntries(); 
+
+        console.log(entry);
+
+    if (id) entries = await entries.map((item) => item.id === id ? entry : item); 
+    else saveEntries(entry);
+     
     render(); 
     closeModal(); 
     showToast(id ? 'Lançamento atualizado.' : 'Lançamento adicionado.');
   });
-  elements.body.addEventListener('click', (event) => {
+  elements.body.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-action]'); if (!button) return;
-    const entry = entries.find((item) => item.id === button.dataset.id); if (!entry) return;
+    const entry = await entries.find((item) => item.id === button.dataset.id); if (!entry) return;
     if (button.dataset.action === 'edit') openModal(entry);
     if (button.dataset.action === 'delete' && confirm(`Excluir “${entry.description}”?`)) { 
       entries = entries.filter((item) => item.id !== entry.id); 
