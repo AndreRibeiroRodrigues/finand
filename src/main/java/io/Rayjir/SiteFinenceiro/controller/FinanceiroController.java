@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -44,15 +45,38 @@ public class FinanceiroController {
         return new ResponseEntity<>(despesa, HttpStatus.OK);
     }
 
-    @PostMapping("postDespesa")
+    @PostMapping("/postDespesa")
     public ResponseEntity<Despesa> postDespesa(@RequestBody Despesa entity) {
         System.out.println("Despesa recebida: " + entity);
         Despesa despesaSalva = financeiroRepository.save(entity);
         return new ResponseEntity<>(despesaSalva, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public String deletePath(@RequestBody int id){
-        return "Despesa deletada";
+    @PutMapping("/{id}")
+    public ResponseEntity<Despesa> putDespesa(
+            @PathVariable("id") UUID id,
+            @RequestBody Despesa dadosAtualizados) {
+        return financeiroRepository.findById(id)
+                .map(despesa -> {
+                    despesa.setDate(dadosAtualizados.getDate());
+                    despesa.setCategory(dadosAtualizados.getCategory());
+                    despesa.setSubcategory(dadosAtualizados.getSubcategory());
+                    despesa.setDescription(dadosAtualizados.getDescription());
+                    despesa.setValue(dadosAtualizados.getValue());
+                    despesa.setStatus(dadosAtualizados.getStatus());
+                    despesa.setPaymentMethod(dadosAtualizados.getPaymentMethod());
+                    despesa.setObservation(dadosAtualizados.getObservation());
+                    return ResponseEntity.ok(financeiroRepository.save(despesa));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDespesa(@PathVariable("id") UUID id) {
+        if (!financeiroRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        financeiroRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

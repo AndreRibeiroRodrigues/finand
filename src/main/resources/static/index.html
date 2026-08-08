@@ -6,6 +6,16 @@
   <meta name="description" content="Controle de finanças pessoal em estilo retrô.">
   <title>Finanças 95</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .filters { display: flex; align-items: end; gap: 12px; flex: 1; }
+    .filter-field { display: grid; gap: 5px; width: 150px; font-size: .75rem; font-weight: bold; text-transform: uppercase; }
+    .result-label { white-space: nowrap; }
+    @media (max-width: 720px) {
+      .filters { align-items: stretch; flex-wrap: wrap; }
+      .filters .search-field { width: 100%; }
+      .filter-field { flex: 1; min-width: 130px; }
+    }
+  </style>
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
@@ -30,10 +40,20 @@
 
     <section class="panel">
       <div class="panel-heading">
-        <label class="search-field" for="searchInput">
-          <span>Buscar</span>
-          <input id="searchInput" type="search" placeholder="Descrição, categoria, mês..." autocomplete="off">
-        </label>
+        <div class="filters" aria-label="Filtros dos lançamentos">
+          <label class="search-field" for="searchInput">
+            <span>Buscar</span>
+            <input id="searchInput" type="search" placeholder="Descrição, categoria, mês..." autocomplete="off">
+          </label>
+          <label class="filter-field" for="yearFilter">
+            <span>Ano</span>
+            <select id="yearFilter"><option value="">Todos</option></select>
+          </label>
+          <label class="filter-field" for="monthFilter">
+            <span>Mês</span>
+            <select id="monthFilter"><option value="">Todos</option></select>
+          </label>
+        </div>
         <span class="result-label" id="resultLabel">0 registros</span>
       </div>
 
@@ -81,7 +101,16 @@
             <option value="NAO_PAGO">Não</option>
           </select>
         </label>
-          <label class="wide">Forma de pagamento<select id="paymentMethod" required><option value="">Selecione...</option><option>Pix</option><option>Dinheiro</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Boleto</option><option>Transferência</option><option>Outro</option></select></label>
+          <label class="wide">Forma de pagamento<select id="paymentMethod" required>
+            <option value="">SELECIONE...</option>
+            <option value="PIX">PIX</option>
+            <option value="DINHEIRO">DINHEIRO</option>
+            <option value="CARTAO_CREDITO">CARTÃO DE CRÉDITO</option>
+            <option value="CARTAO_DEBITO">CARTÃO DE DÉBITO</option>
+            <option value="BOLETO">BOLETO</option>
+            <option value="TRANSFERENCIA">TRANSFERÊNCIA</option>
+          </select>
+        </label>
           <label class="wide">Observações<textarea id="notes" rows="3" maxlength="240" placeholder="Informações adicionais"></textarea></label>
         </div>
         <div class="form-actions">

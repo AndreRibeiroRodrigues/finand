@@ -30,23 +30,25 @@ public class Despesa {
     @Id
     @GeneratedValue(strategy=GenerationType.UUID)
     private UUID id;
-    @Column(nullable = false)
+    @Column(name = "usuario_id")
+    private UUID usuarioId;
+    @Column()
     private Date date;
-    @Column(nullable = false)
+    @Column()
     private String category;
-    @Column(nullable = false)
+    @Column()
     private String subcategory;
-    @Column(nullable = false)
+    @Column()
     private String description;
-    @Column(nullable = false)
+    @Column()
     private double value;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column()
     private Status status;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "payment_method")
+    @Column(name = "payment_method")
     private FormaPagamento paymentMethod;
-    @Column(nullable = false)
+    @Column()
     private String observation;
 
 }
