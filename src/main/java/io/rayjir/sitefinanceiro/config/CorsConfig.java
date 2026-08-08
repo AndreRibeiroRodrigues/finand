@@ -1,4 +1,4 @@
-package io.Rayjir.SiteFinenceiro.config;
+package io.rayjir.sitefinanceiro.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

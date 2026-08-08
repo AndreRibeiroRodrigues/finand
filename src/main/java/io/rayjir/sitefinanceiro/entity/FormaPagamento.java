@@ -1,4 +1,4 @@
-package io.Rayjir.SiteFinenceiro.entity;
+package io.rayjir.sitefinanceiro.entity;
 
 public enum FormaPagamento {
     PIX,

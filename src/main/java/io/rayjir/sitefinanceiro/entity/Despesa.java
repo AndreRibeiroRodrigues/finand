@@ -1,4 +1,4 @@
-package io.Rayjir.SiteFinenceiro.entity;
+package io.rayjir.sitefinanceiro.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

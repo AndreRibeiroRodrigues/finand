@@ -1,3 +1,4 @@
+package io.rayjir.sitefinanceiro.config;
 // package io.Rayjir.SiteFinenceiro.config;
 
 // import org.springframework.beans.factory.annotation.Value;

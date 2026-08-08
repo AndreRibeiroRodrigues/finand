@@ -3,86 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Controle de finanças pessoal em estilo retrô.">
+  <meta name="description" content="Controle de finanças pessoal em estilo Windows 95.">
   <title>Finanças 95</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .filters { display: flex; align-items: end; gap: 12px; flex: 1; }
-    .filter-field { display: grid; gap: 5px; width: 150px; font-size: .75rem; font-weight: bold; text-transform: uppercase; }
-    .result-label { white-space: nowrap; }
-    @media (max-width: 720px) {
-      .filters { align-items: stretch; flex-wrap: wrap; }
-      .filters .search-field { width: 100%; }
-      .filter-field { flex: 1; min-width: 130px; }
-    }
-  </style>
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
-  <main class="app-shell">
-    <header class="title-bar">
-      <div class="brand"><span class="brand-icon">$</span> FINANÇAS 95</div>
-      <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
-    </header>
 
-    <section class="toolbar" aria-label="Ferramentas">
-      <div>
-        <p class="eyebrow">PAINEL DE CONTROLE</p>
-        <h1>Meus lançamentos</h1>
-      </div>
-      <button class="button button-primary" id="newEntryButton" type="button">＋ Novo lançamento</button>
-    </section>
-
-    <section class="stats" aria-label="Resumo financeiro">
-      <article class="stat-card"><span>Total de lançamentos</span><strong id="entryCount">0</strong></article>
-      <article class="stat-card total"><span>Total geral</span><strong id="grandTotal">R$ 0,00</strong></article>
-    </section>
-
-    <section class="panel">
-      <div class="panel-heading">
-        <div class="filters" aria-label="Filtros dos lançamentos">
-          <label class="search-field" for="searchInput">
-            <span>Buscar</span>
-            <input id="searchInput" type="search" placeholder="Descrição, categoria, mês..." autocomplete="off">
-          </label>
-          <label class="filter-field" for="yearFilter">
-            <span>Ano</span>
-            <select id="yearFilter"><option value="">Todos</option></select>
-          </label>
-          <label class="filter-field" for="monthFilter">
-            <span>Mês</span>
-            <select id="monthFilter"><option value="">Todos</option></select>
-          </label>
+  <main class="desktop" aria-live="polite">
+    <section class="app-window login-window" id="loginView" data-view="login">
+      <header class="title-bar">
+        <div class="brand"><span class="brand-icon user-icon" aria-hidden="true">●</span> LOGIN — FINANÇAS 95</div>
+        <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
+      </header>
+      <div class="login-content">
+        <div class="login-logo" aria-hidden="true"><span>$</span></div>
+        <div>
+          <p class="eyebrow">ACESSO AO SISTEMA</p>
+          <h1>Bem-vindo ao Finanças 95</h1>
+          <p class="login-help">Digite suas credenciais para abrir o painel de despesas.</p>
         </div>
-        <span class="result-label" id="resultLabel">0 registros</span>
+        <form id="loginForm" class="login-form">
+          <label for="loginUsername">Usuário
+            <input id="loginUsername" name="username" type="text" autocomplete="username" maxlength="80" required>
+          </label>
+          <label for="loginPassword">Senha
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" maxlength="100" required>
+          </label>
+          <p class="login-error" id="loginError" role="alert" hidden></p>
+          <button class="button button-primary" type="submit">Entrar</button>
+        </form>
       </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Categoria</th>
-              <th>Subcategoria</th>
-              <th>Descrição</th>
-              <th>Valor (R$)</th>
-              <th>Pago?</th>
-              <th>Forma de pagamento</th>
-              <th>Observações</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="entriesBody"></tbody>
-        </table>
-        <div class="empty-state" id="emptyState">
-          <span>▣</span>
-          <strong>Nenhum lançamento encontrado</strong>
-          <p>Use “Novo lançamento” para começar.</p>
-        </div>
-      </div>
+      <footer>FINANÇAS 95 • LOGIN LOCAL</footer>
     </section>
-    <footer>FINANÇAS 95 • DADOS SALVOS NO SERVIDOR</footer>
+
+    <section class="app-window expenses-window" id="expensesView" data-view="expenses" hidden>
+      <header class="title-bar">
+        <div class="brand"><span class="brand-icon" aria-hidden="true">$</span> FINANÇAS 95 — DESPESAS</div>
+        <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
+      </header>
+
+      <section class="toolbar" aria-label="Ferramentas">
+        <div>
+          <p class="eyebrow">PAINEL DE CONTROLE</p>
+          <h1>Meus lançamentos</h1>
+        </div>
+        <button class="button button-primary" id="newEntryButton" type="button">＋ Novo lançamento</button>
+      </section>
+
+      <section class="stats" aria-label="Resumo financeiro">
+        <article class="stat-card"><span>Total de lançamentos</span><strong id="entryCount">0</strong></article>
+        <article class="stat-card total"><span>Total geral</span><strong id="grandTotal">R$ 0,00</strong></article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div class="filters" aria-label="Filtros dos lançamentos">
+            <label class="search-field" for="searchInput"><span>Buscar</span>
+              <input id="searchInput" type="search" placeholder="Descrição, categoria, mês..." autocomplete="off">
+            </label>
+            <label class="filter-field" for="yearFilter"><span>Ano</span>
+              <select id="yearFilter"><option value="">Todos</option></select>
+            </label>
+            <label class="filter-field" for="monthFilter"><span>Mês</span>
+              <select id="monthFilter"><option value="">Todos</option></select>
+            </label>
+          </div>
+          <span class="result-label" id="resultLabel">0 registros</span>
+        </div>
+
+        <div class="table-wrap" tabindex="0" aria-label="Tabela de lançamentos com rolagem">
+          <table>
+            <thead><tr>
+              <th>Data</th><th>Categoria</th><th>Subcategoria</th><th>Descrição</th>
+              <th>Valor (R$)</th><th>Pago?</th><th>Forma de pagamento</th>
+              <th>Observações</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="entriesBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState">
+            <span>▣</span><strong>Nenhum lançamento encontrado</strong>
+            <p>Use “Novo lançamento” para começar.</p>
+          </div>
+        </div>
+      </section>
+      <footer>FINANÇAS 95 • DADOS SALVOS NO SERVIDOR</footer>
+    </section>
   </main>
+
+  <nav class="taskbar" aria-label="Barra de tarefas">
+    <button class="start-button" type="button" aria-label="Menu iniciar"><span class="windows-mark">▦</span> Iniciar</button>
+    <div class="taskbar-divider" aria-hidden="true"></div>
+    <div class="taskbar-apps">
+      <button class="taskbar-button active" type="button" data-open-view="login" aria-label="Abrir Login" title="Login">
+        <span class="task-icon login-task-icon" aria-hidden="true">●</span><span>Login</span>
+      </button>
+      <button class="taskbar-button" type="button" data-open-view="expenses" aria-label="Abrir Despesas" title="Despesas">
+        <span class="task-icon expenses-task-icon" aria-hidden="true">$</span><span>Despesas</span>
+      </button>
+    </div>
+    <div class="taskbar-clock" id="taskbarClock" aria-label="Horário atual">--:--</div>
+  </nav>
 
   <div class="modal" id="entryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
     <div class="modal-window">
@@ -95,27 +116,15 @@
           <label>Subcategoria<input id="subcategory" type="text" maxlength="40" placeholder="Ex.: Aluguel"></label>
           <label class="wide">Descrição<input id="description" type="text" maxlength="100" placeholder="Descreva o lançamento" required></label>
           <label>Valor (R$)<input id="amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0,00" required></label>
-          <label>Pago?
-            <select id="paid">
-            <option value="PAGO">Sim</option>
-            <option value="NAO_PAGO">Não</option>
-          </select>
-        </label>
-          <label class="wide">Forma de pagamento<select id="paymentMethod" required>
-            <option value="">SELECIONE...</option>
-            <option value="PIX">PIX</option>
-            <option value="DINHEIRO">DINHEIRO</option>
-            <option value="CARTAO_CREDITO">CARTÃO DE CRÉDITO</option>
-            <option value="CARTAO_DEBITO">CARTÃO DE DÉBITO</option>
-            <option value="BOLETO">BOLETO</option>
-            <option value="TRANSFERENCIA">TRANSFERÊNCIA</option>
-          </select>
-        </label>
+          <label>Pago?<select id="paid"><option value="PAGO">Sim</option><option value="NAO_PAGO">Não</option></select></label>
+          <label class="wide">Forma de pagamento<select id="paymentMethod">
+            <option value="">SELECIONE...</option><option value="PIX">PIX</option><option value="DINHEIRO">DINHEIRO</option>
+            <option value="CARTAO_CREDITO">CARTÃO DE CRÉDITO</option><option value="CARTAO_DEBITO">CARTÃO DE DÉBITO</option>
+            <option value="BOLETO">BOLETO</option><option value="TRANSFERENCIA">TRANSFERÊNCIA</option>
+          </select></label>
           <label class="wide">Observações<textarea id="notes" rows="3" maxlength="240" placeholder="Informações adicionais"></textarea></label>
         </div>
-        <div class="form-actions">
-          <button class="button" id="cancelButton" type="button">Cancelar</button>
-          <button class="button button-primary" type="submit">Salvar lançamento</button></div>
+        <div class="form-actions"><button class="button" id="cancelButton" type="button">Cancelar</button><button class="button button-primary" type="submit">Salvar lançamento</button></div>
       </form>
     </div>
   </div>
