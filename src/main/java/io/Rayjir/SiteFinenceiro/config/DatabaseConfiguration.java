@@ -1,29 +1,31 @@
-package io.Rayjir.SiteFinenceiro.config;
+// package io.Rayjir.SiteFinenceiro.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.sql.DataSource;
+// import javax.sql.DataSource;
 
-public class DatabaseConfiguration {
+// @Configuration
+// public class DatabaseConfiguration {
 
-    @Value("${spring.datasource.url}")
-    String url;
-    @Value("${spring.datasouce.username}")
-    String username;
-    @Value("${spring.datasouce.password}")
-    String password;
-    @Value("${spring.datasouce.driver-class-name}")
-    String driver;
+//     @Value("${spring.datasource.url}")
+//     String url;
+//     @Value("${spring.datasouce.username}")
+//     String username;
+//     @Value("${spring.datasouce.password}")
+//     String password;
+//     @Value("${spring.datasouce.driver-class-name}")
+//     String driver;
 
-    @Bean
-    public DataSource dataSource(){
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setUrl(url);
-        ds.setUsername(username);
-        ds.setPassword(password);
-        ds.setDriverClassName(driver);
-        return ds;
-    }
-}
+//     @Bean
+//     public DataSource dataSource(){
+//         DriverManagerDataSource ds = new DriverManagerDataSource();
+//         ds.setUrl(url);
+//         ds.setUsername(username);
+//         ds.setPassword(password);
+//         ds.setDriverClassName(driver);
+//         return ds;
+//     }
+// }
