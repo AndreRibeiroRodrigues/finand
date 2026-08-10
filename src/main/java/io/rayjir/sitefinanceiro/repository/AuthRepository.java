@@ -1,4 +1,4 @@
-package io.rayjir.sitefinanceiro.repository;
+package io.Rayjir.sitefinanceiro.repository;
 // package io.rayjir.sitefinenceiro.repository;
 
 // import java.util.UUID;
