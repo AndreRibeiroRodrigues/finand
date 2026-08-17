@@ -5,20 +5,41 @@
   const SESSION_KEY = 'financas95.sessionUser';
   const $ = (selector) => document.querySelector(selector);
   const elements = {
-    modal: $('#entryModal'), form: $('#entryForm'), body: $('#entriesBody'),
-    empty: $('#emptyState'), search: $('#searchInput'), yearFilter: $('#yearFilter'),
-    monthFilter: $('#monthFilter'), count: $('#entryCount'), total: $('#grandTotal'),
-    result: $('#resultLabel'), title: $('#modalTitle'), toast: $('#toast'),
-    loginView: $('#loginView'), expensesView: $('#expensesView'),
-    loginForm: $('#loginForm'), loginError: $('#loginError'), clock: $('#taskbarClock')
+    modal: $('#entryModal'),
+    form: $('#entryForm'),
+    body: $('#entriesBody'),
+    empty: $('#emptyState'),
+    search: $('#searchInput'),
+    yearFilter: $('#yearFilter'),
+    monthFilter: $('#monthFilter'),
+    count: $('#entryCount'),
+    total: $('#grandTotal'),
+    result: $('#resultLabel'),
+    title: $('#modalTitle'),
+    toast: $('#toast'),
+    loginView: $('#loginView'),
+    expensesView: $('#expensesView'),
+    loginForm: $('#loginForm'),
+    loginError: $('#loginError'),
+    clock: $('#taskbarClock')
   };
 
   let entries = [];
   let entriesLoaded = false;
   let lastFocusedElement = null;
   const monthNames = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
   ];
 
   async function request(url, options = {}) {
@@ -62,8 +83,12 @@
 
   function paymentMethodLabel(value) {
     const labels = {
-      PIX: 'PIX', CARTAO_CREDITO: 'Cartão de crédito', CARTAO_DEBITO: 'Cartão de débito',
-      BOLETO: 'Boleto', DINHEIRO: 'Dinheiro', TRANSFERENCIA: 'Transferência'
+      PIX: 'PIX',
+      CARTAO_CREDITO: 'Cartão de crédito',
+      CARTAO_DEBITO: 'Cartão de débito',
+      BOLETO: 'Boleto',
+      DINHEIRO: 'Dinheiro',
+      TRANSFERENCIA: 'Transferência'
     };
     return labels[value] || value || '—';
   }
@@ -233,7 +258,7 @@
       }
     }
   }
-
+  //login form
   elements.loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = $('#loginUsername').value.trim();

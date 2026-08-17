@@ -10,7 +10,9 @@
   --taskbar-height: 62px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 html { min-height: 100%; background: #003f3f; }
 body {
   min-height: 100vh;
@@ -31,7 +33,12 @@ button, input, select, textarea { font: inherit; }
   background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0, rgba(0,0,0,.08) 1px, transparent 1px, transparent 4px);
   mix-blend-mode: multiply;
 }
-.desktop { position: relative; z-index: 1; width: min(1600px, 100%); margin: auto; }
+.desktop {
+  position: relative;
+  z-index: 1;
+  width: min(1600px, 100%);
+  margin: auto;
+}
 .app-window {
   background: var(--silver);
   border: 3px solid;
@@ -57,8 +64,15 @@ button, input, select, textarea { font: inherit; }
   border: 2px outset #eee;
   font-weight: 900;
 }
-.user-icon { color: #17284c; background: #f5d36d; font-size: .7rem; }
-.window-buttons { display: flex; gap: 4px; }
+.user-icon {
+  color: #17284c;
+  background: #f5d36d;
+  font-size: .7rem;
+}
+.window-buttons {
+  display: flex;
+  gap: 4px;
+}
 .window-buttons span, .modal-titlebar button {
   display: grid;
   place-items: center;
@@ -70,8 +84,16 @@ button, input, select, textarea { font: inherit; }
   font: bold 16px Arial;
 }
 
-.login-window { width: min(560px, 100%); margin: max(5vh, 30px) auto 0; }
-.login-content { display: grid; grid-template-columns: 90px 1fr; gap: 20px; padding: 34px; }
+.login-window {
+  width: min(560px, 100%);
+  margin: max(5vh, 30px) auto 0;
+}
+.login-content {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 20px;
+  padding: 34px;
+}
 .login-logo {
   grid-row: span 2;
   display: grid;
@@ -85,14 +107,46 @@ button, input, select, textarea { font: inherit; }
   font-size: 3rem;
   font-weight: 900;
 }
-.login-content h1 { margin: 0; font-size: 1.45rem; }
-.login-help { margin: 8px 0 0; color: #444; font-size: .82rem; line-height: 1.45; }
-.login-form { grid-column: 2; display: grid; gap: 14px; }
-.login-form label { display: grid; gap: 5px; font-size: .78rem; font-weight: 700; }
-.login-form .button { justify-self: end; min-width: 120px; }
-.login-error { margin: 0; padding: 7px; color: #fff; background: var(--danger); font-size: .75rem; }
+.login-content h1 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+.login-help {
+  margin: 8px 0 0;
+  color: #444;
+  font-size: .82rem;
+  line-height: 1.45;
+}
+.login-form {
+  grid-column: 2;
+  display: grid;
+  gap: 14px;
+}
+.login-form label {
+  display: grid;
+  gap: 5px;
+  font-size: .78rem;
+  font-weight: 700;
+}
+.login-form .button {
+  justify-self: end;
+  min-width: 120px;
+}
+.login-error {
+  margin: 0;
+  padding: 7px;
+  color: #fff;
+  background: var(--danger);
+  font-size: .75rem;
+}
 
-.toolbar { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 18px 24px; }
+.toolbar {
+  display: flex;
+  lign-items: end; 
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px;
+}
 .eyebrow { margin: 0 0 6px; color: #555; font-weight: 700; font-size: .76rem; letter-spacing: .14em; }
 .toolbar h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
 .button {

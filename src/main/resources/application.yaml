@@ -1,6 +1,6 @@
 spring:
   application:
-    name: SiteFinanceiro
+    name: finand
 
   config:
     import: optional:file:.env[.properties]
@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     hikari:
-      pool-name: SiteFinanceiroPool
+      pool-name: finandPool
       maximum-pool-size: 10
       minimum-idle: 2
       connection-timeout: 30000

@@ -1,8 +1,10 @@
-package io.rayjir.sitefinanceiro.controller;
+package io.Rayjir.finand.controller;
 
 import java.util.List;
 import java.util.UUID;
 
+import io.Rayjir.finand.repository.FinanceiroRepository;
+import io.Rayjir.finand.entity.Despesa;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,10 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.rayjir.sitefinanceiro.entity.Despesa;
-import io.rayjir.sitefinanceiro.repository.FinanceiroRepository;
-
 
 @RestController
 @RequestMapping("/api/despesas")

@@ -1,4 +1,4 @@
-package io.rayjir.sitefinanceiro.entity;
+package io.Rayjir.finand.entity;
 
 import java.util.UUID;
 
@@ -26,7 +26,8 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     @Column(nullable = false)
     private String nome;
+
+
 }
