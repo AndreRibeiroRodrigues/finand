@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login do Finanças 95.">
+  <title>Finanças 95 — Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="desktop">
+    <section class="app-window login-window">
+      <header class="title-bar">
+        <div class="brand">
+          <span class="brand-icon user-icon" aria-hidden="true">●</span>
+          LOGIN — FINANÇAS 95
+        </div>
+        <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
+      </header>
+
+      <div class="login-content">
+        <div class="login-logo" aria-hidden="true"><span>$</span></div>
+
+        <div>
+          <p class="eyebrow">ACESSO AO SISTEMA</p>
+          <h1>Bem-vindo ao Finanças 95</h1>
+          <p class="login-help">Digite suas credenciais para abrir o painel de despesas.</p>
+        </div>
+
+        <form id="loginForm" class="login-form" method="post" th:action="@{/login}">
+          <label for="loginUsername">
+            Usuário
+            <input id="loginUsername" name="username" type="text" autocomplete="username" maxlength="80" required>
+          </label>
+
+          <label for="loginPassword">
+            Senha
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" maxlength="100" required>
+          </label>
+
+          <p class="login-error" id="loginError" role="alert" hidden></p>
+          <button class="button button-primary" type="submit">Entrar</button>
+        </form>
+      </div>
+
+      <footer>FINANÇAS 95 • LOGIN LOCAL</footer>
+    </section>
+  </main>
+
+  <nav class="taskbar" aria-label="Barra de tarefas">
+    <button class="start-button" type="button"><span class="windows-mark">▦</span> Iniciar</button>
+    <div class="taskbar-divider" aria-hidden="true"></div>
+    <div class="taskbar-apps">
+      <button class="taskbar-button active" type="button" aria-label="Login" title="Login">
+        <span class="task-icon login-task-icon" aria-hidden="true">●</span><span>Login</span>
+      </button>
+    </div>
+    <div class="taskbar-clock" id="taskbarClock" aria-label="Horário atual">--:--</div>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/workspaces/SiteFinanceiro/src/main/resources/static/js/login.js"></script>
+</body>
+</html>

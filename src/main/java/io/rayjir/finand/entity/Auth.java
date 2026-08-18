@@ -1,4 +1,4 @@
-package io.Rayjir.finand.entity;
+package io.rayjir.finand.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

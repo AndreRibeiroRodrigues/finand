@@ -4,40 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Controle de finanças pessoal em estilo Windows 95.">
-  <title>Finanças 95</title>
+  <title>Finanças 95 — Despesas</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
 
   <main class="desktop" aria-live="polite">
-    <section class="app-window login-window" id="loginView" data-view="login">
-      <header class="title-bar">
-        <div class="brand"><span class="brand-icon user-icon" aria-hidden="true">●</span> LOGIN — FINANÇAS 95</div>
-        <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
-      </header>
-      <div class="login-content">
-        <div class="login-logo" aria-hidden="true"><span>$</span></div>
-        <div>
-          <p class="eyebrow">ACESSO AO SISTEMA</p>
-          <h1>Bem-vindo ao Finanças 95</h1>
-          <p class="login-help">Digite suas credenciais para abrir o painel de despesas.</p>
-        </div>
-        <form id="loginForm" class="login-form">
-          <label for="loginUsername">Usuário
-            <input id="loginUsername" name="username" type="text" autocomplete="username" maxlength="80" required>
-          </label>
-          <label for="loginPassword">Senha
-            <input id="loginPassword" name="password" type="password" autocomplete="current-password" maxlength="100" required>
-          </label>
-          <p class="login-error" id="loginError" role="alert" hidden></p>
-          <button class="button button-primary" type="submit">Entrar</button>
-        </form>
-      </div>
-      <footer>FINANÇAS 95 • LOGIN LOCAL</footer>
-    </section>
-
-    <section class="app-window expenses-window" id="expensesView" data-view="expenses" hidden>
+    <section class="app-window expenses-window" id="expensesView">
       <header class="title-bar">
         <div class="brand"><span class="brand-icon" aria-hidden="true">$</span> FINANÇAS 95 — DESPESAS</div>
         <div class="window-buttons" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
@@ -87,20 +61,18 @@
           </div>
         </div>
       </section>
+
       <footer>FINANÇAS 95 • DADOS SALVOS NO SERVIDOR</footer>
     </section>
   </main>
 
   <nav class="taskbar" aria-label="Barra de tarefas">
-    <button class="start-button" type="button" aria-label="Menu iniciar"><span class="windows-mark">▦</span> Iniciar</button>
+    <a class="start-button" href="login.html" aria-label="Sair e voltar ao login"><span class="windows-mark">▦</span> Sair</a>
     <div class="taskbar-divider" aria-hidden="true"></div>
     <div class="taskbar-apps">
-      <button class="taskbar-button active" type="button" data-open-view="login" aria-label="Abrir Login" title="Login">
-        <span class="task-icon login-task-icon" aria-hidden="true">●</span><span>Login</span>
-      </button>
-      <button class="taskbar-button" type="button" data-open-view="expenses" aria-label="Abrir Despesas" title="Despesas">
+      <a class="taskbar-button active" href="index.html" aria-label="Abrir Despesas" title="Despesas">
         <span class="task-icon expenses-task-icon" aria-hidden="true">$</span><span>Despesas</span>
-      </button>
+      </a>
     </div>
     <div class="taskbar-clock" id="taskbarClock" aria-label="Horário atual">--:--</div>
   </nav>
@@ -124,7 +96,10 @@
           </select></label>
           <label class="wide">Observações<textarea id="notes" rows="3" maxlength="240" placeholder="Informações adicionais"></textarea></label>
         </div>
-        <div class="form-actions"><button class="button" id="cancelButton" type="button">Cancelar</button><button class="button button-primary" type="submit">Salvar lançamento</button></div>
+        <div class="form-actions">
+          <button class="button" id="cancelButton" type="button">Cancelar</button>
+          <button class="button button-primary" type="submit">Salvar lançamento</button>
+        </div>
       </form>
     </div>
   </div>

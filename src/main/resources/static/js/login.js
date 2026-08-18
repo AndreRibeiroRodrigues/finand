@@ -1,0 +1,53 @@
+(() => {
+  'use strict';
+
+  // const SESSION_KEY = 'financas95.sessionUser';
+  const $ = (selector) => document.querySelector(selector);
+
+  const form = $('#loginForm');
+  const error = $('#loginError');
+  const toast = $('#toast');
+  const clock = $('#taskbarClock');
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const username = $('#loginUsername').value.trim();
+    const password = $('#loginPassword').value;
+
+    if (!username || !password) {
+      error.textContent = 'Preencha o usuário e a senha.';
+      error.hidden = false;
+      return;
+    }
+   
+    error.hidden = true;
+
+    // Login temporário/local.
+    // Quando o backend de autenticação estiver pronto, substitua esta parte
+    // por um fetch para /api/auth/login.
+    // sessionStorage.setItem(SESSION_KEY, username);
+
+    $('#loginPassword').value = '';
+    showToast(`Bem-vindo, ${username}.`);
+
+    // window.location.href = 'index.html';
+  });
+
+  function updateClock() {
+    clock.textContent = new Intl.DateTimeFormat('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date());
+  }
+
+  updateClock();
+  setInterval(updateClock, 30000);
+})();

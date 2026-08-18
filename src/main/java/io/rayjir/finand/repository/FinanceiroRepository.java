@@ -1,8 +1,8 @@
-package io.Rayjir.finand.repository;
+package io.rayjir.finand.repository;
 
 import java.util.UUID;
 
-import io.Rayjir.finand.entity.Despesa;
+import io.rayjir.finand.entity.Despesa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

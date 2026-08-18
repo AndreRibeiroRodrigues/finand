@@ -1,10 +1,10 @@
-package io.Rayjir.finand.controller;
+package io.rayjir.finand.controller;
 
 import java.util.List;
 import java.util.UUID;
 
-import io.Rayjir.finand.repository.FinanceiroRepository;
-import io.Rayjir.finand.entity.Despesa;
+import io.rayjir.finand.repository.FinanceiroRepository;
+import io.rayjir.finand.entity.Despesa;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

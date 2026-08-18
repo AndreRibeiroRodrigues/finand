@@ -1,6 +1,6 @@
-package io.Rayjir.finand.controller;
+package io.rayjir.finand.controller;
 
-import io.Rayjir.finand.entity.Auth;
+import io.rayjir.finand.entity.Auth;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

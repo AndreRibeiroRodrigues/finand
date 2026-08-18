@@ -1,8 +1,8 @@
-package io.Rayjir.finand.repository;
+package io.rayjir.finand.repository;
 
  import java.util.UUID;
 
- import io.Rayjir.finand.entity.Auth;
+ import io.rayjir.finand.entity.Auth;
  import org.springframework.data.jpa.repository.JpaRepository;
 
  public interface AuthRepository extends JpaRepository<Auth, UUID> {

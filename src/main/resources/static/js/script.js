@@ -1,8 +1,7 @@
 (() => {
   'use strict';
 
-  const API_BASE = '/api/despesas';
-  const SESSION_KEY = 'financas95.sessionUser';
+  // const SESSION_KEY = 'financas95.sessionUser';
   const $ = (selector) => document.querySelector(selector);
   const elements = {
     modal: $('#entryModal'),
@@ -17,10 +16,6 @@
     result: $('#resultLabel'),
     title: $('#modalTitle'),
     toast: $('#toast'),
-    loginView: $('#loginView'),
-    expensesView: $('#expensesView'),
-    loginForm: $('#loginForm'),
-    loginError: $('#loginError'),
     clock: $('#taskbarClock')
   };
 
@@ -53,7 +48,7 @@
   }
 
   async function loadEntries() {
-    entries = await request(`${API_BASE}/get`);
+    entries = await request(`/api/despesas/get`);
     entriesLoaded = true;
     updateDateFilters();
     render();
@@ -198,15 +193,19 @@
     event.preventDefault();
     const id = $('#entryId').value;
     const entry = {
-      date: $('#date').value, category: $('#category').value.trim(),
-      subcategory: $('#subcategory').value.trim(), description: $('#description').value.trim(),
-      value: Number($('#amount').value), status: $('#paid').value,
-      paymentMethod: $('#paymentMethod').value || null, observation: $('#notes').value.trim()
+      date: $('#date').value, 
+      category: $('#category').value.trim(),
+      subcategory: $('#subcategory').value.trim(), 
+      description: $('#description').value.trim(),
+      value: Number($('#amount').value), 
+      status: $('#paid').value,
+      paymentMethod: $('#paymentMethod').value || null, 
+      observation: $('#notes').value.trim()
     };
     const submit = elements.form.querySelector('[type="submit"]');
     submit.disabled = true;
     try {
-      const saved = await request(id ? `${API_BASE}/${encodeURIComponent(id)}` : `${API_BASE}/postDespesa`, {
+      const saved = await request(id ? `/api/despesas/${encodeURIComponent(id)}` : `/api/despesas/postDespesa`, {
         method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(entry)
       });
       entries = id ? entries.map((item) => String(item.id) === id ? saved : item) : [...entries, saved];
@@ -228,7 +227,7 @@
     if (button.dataset.action !== 'delete' || !confirm(`Excluir “${entry.description}”?`)) return;
     button.disabled = true;
     try {
-      await request(`${API_BASE}/${encodeURIComponent(id)}`, { method: 'DELETE' });
+      await request(`/api/despesas/${encodeURIComponent(id)}`, { method: 'DELETE' });
       entries = entries.filter((item) => String(item.id) !== id);
       updateDateFilters(); render(); showToast('Lançamento excluído.');
     } catch (error) {
@@ -237,60 +236,44 @@
     }
   });
 
-  async function showView(requestedView) {
-    let view = requestedView;
-    if (view === 'expenses' && !sessionStorage.getItem(SESSION_KEY)) {
-      view = 'login';
-      showToast('Faça login para abrir as despesas.');
-    }
-    elements.loginView.hidden = view !== 'login';
-    elements.expensesView.hidden = view !== 'expenses';
-    document.querySelectorAll('[data-open-view]').forEach((button) => {
-      const active = button.dataset.openView === view;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
-    if (view === 'expenses' && !entriesLoaded) {
-      try { await loadEntries(); }
-      catch (error) {
-        console.error('Erro ao carregar lançamentos:', error);
-        render(); showToast('Não foi possível carregar os lançamentos.');
-      }
-    }
-  }
-  //login form
-  elements.loginForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const username = $('#loginUsername').value.trim();
-    const password = $('#loginPassword').value;
-    if (!username || !password) {
-      elements.loginError.textContent = 'Preencha o usuário e a senha.';
-      elements.loginError.hidden = false;
-      return;
-    }
-    elements.loginError.hidden = true;
-    sessionStorage.setItem(SESSION_KEY, username);
-    $('#loginPassword').value = '';
-    showToast(`Bem-vindo, ${username}.`);
-    await showView('expenses');
-  });
+  // if (!sessionStorage.getItem(SESSION_KEY)) {
+  //   window.location.replace('login.html');
+  //   return;
+  // }
 
   $('#newEntryButton').addEventListener('click', () => openModal());
   $('#closeModalButton').addEventListener('click', closeModal);
   $('#cancelButton').addEventListener('click', closeModal);
   elements.search.addEventListener('input', render);
-  elements.yearFilter.addEventListener('change', () => { updateMonthFilter(); render(); });
+  elements.yearFilter.addEventListener('change', () => {
+    updateMonthFilter();
+    render();
+  });
   elements.monthFilter.addEventListener('change', render);
-  elements.modal.addEventListener('click', (event) => { if (event.target === elements.modal) closeModal(); });
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !elements.modal.hidden) closeModal(); });
-  document.querySelectorAll('[data-open-view]').forEach((button) =>
-    button.addEventListener('click', () => showView(button.dataset.openView)));
-  $('.start-button').addEventListener('click', () => showView('login'));
+  elements.modal.addEventListener('click', (event) => {
+    if (event.target === elements.modal) closeModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !elements.modal.hidden) closeModal();
+  });
+
+  // document.querySelector('.start-button').addEventListener('click', () => {
+  //   sessionStorage.removeItem(SESSION_KEY);
+  // });
 
   function updateClock() {
-    elements.clock.textContent = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(new Date());
+    elements.clock.textContent = new Intl.DateTimeFormat('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date());
   }
+
   updateClock();
   setInterval(updateClock, 30000);
-  showView(sessionStorage.getItem(SESSION_KEY) ? 'expenses' : 'login');
+
+  loadEntries().catch((error) => {
+    console.error('Erro ao carregar lançamentos:', error);
+    render();
+    showToast('Não foi possível carregar os lançamentos.');
+  });
 })();

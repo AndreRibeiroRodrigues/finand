@@ -64,11 +64,6 @@ button, input, select, textarea { font: inherit; }
   border: 2px outset #eee;
   font-weight: 900;
 }
-.user-icon {
-  color: #17284c;
-  background: #f5d36d;
-  font-size: .7rem;
-}
 .window-buttons {
   display: flex;
   gap: 4px;
@@ -84,65 +79,9 @@ button, input, select, textarea { font: inherit; }
   font: bold 16px Arial;
 }
 
-.login-window {
-  width: min(560px, 100%);
-  margin: max(5vh, 30px) auto 0;
-}
-.login-content {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 20px;
-  padding: 34px;
-}
-.login-logo {
-  grid-row: span 2;
-  display: grid;
-  place-items: center;
-  width: 84px;
-  height: 84px;
-  color: white;
-  background: var(--navy);
-  border: 4px outset white;
-  box-shadow: 4px 4px #555;
-  font-size: 3rem;
-  font-weight: 900;
-}
-.login-content h1 {
-  margin: 0;
-  font-size: 1.45rem;
-}
-.login-help {
-  margin: 8px 0 0;
-  color: #444;
-  font-size: .82rem;
-  line-height: 1.45;
-}
-.login-form {
-  grid-column: 2;
-  display: grid;
-  gap: 14px;
-}
-.login-form label {
-  display: grid;
-  gap: 5px;
-  font-size: .78rem;
-  font-weight: 700;
-}
-.login-form .button {
-  justify-self: end;
-  min-width: 120px;
-}
-.login-error {
-  margin: 0;
-  padding: 7px;
-  color: #fff;
-  background: var(--danger);
-  font-size: .75rem;
-}
-
 .toolbar {
   display: flex;
-  lign-items: end; 
+  align-items: end; 
   justify-content: space-between;
   gap: 20px;
   padding: 18px 24px;
@@ -174,8 +113,8 @@ input, select, textarea { width: 100%; padding: 9px; background: #fff; border: 3
 .stat-card.total { color: #fff; background: var(--green); border-color: #94d9bd #001d17 #001d17 #94d9bd; }
 
 .panel { margin: 0 24px 16px; background: #dedede; border: 3px inset #fff; }
-.panel-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 12px 14px; }
-.filters { display: flex; align-items: end; gap: 12px; flex: 1; }
+.panel-heading { display: flex; aalign-items: end; justify-content: space-between; gap: 16px; padding: 12px 14px; }
+.filters { display: flex; aalign-items: end; gap: 12px; flex: 1; }
 .search-field, .filter-field { display: grid; gap: 5px; font-size: .75rem; font-weight: 700; text-transform: uppercase; }
 .search-field { width: min(530px, 100%); }
 .filter-field { width: 150px; }
@@ -231,7 +170,6 @@ footer { padding: 0 20px 14px; color: #444; font-size: .7rem; text-align: center
 .taskbar-button { display: flex; align-items: center; gap: 8px; min-width: 130px; padding: 3px 12px 3px 5px; font-weight: 700; cursor: pointer; }
 .taskbar-button.active { background: #ddd; border-style: inset; }
 .task-icon { display: grid; place-items: center; width: 34px; height: 34px; color: #fff; border: 2px outset #eee; font-weight: 900; }
-.login-task-icon { color: #17284c; background: #f5d36d; }
 .expenses-task-icon { background: #168c68; }
 .taskbar-clock { display: grid; min-width: 82px; place-items: center; padding: 0 10px; font-size: .82rem; }
 
@@ -251,9 +189,6 @@ textarea { resize: vertical; }
 @media (max-width: 720px) {
   body { padding: 8px 8px calc(var(--taskbar-height) + 10px); }
   .app-window { box-shadow: 5px 6px rgba(0,0,0,.35); }
-  .login-content { grid-template-columns: 1fr; padding: 24px 18px; }
-  .login-logo { grid-row: auto; width: 64px; height: 64px; }
-  .login-form { grid-column: 1; }
   .toolbar { align-items: stretch; flex-direction: column; padding: 16px 14px; }
   .button-primary { width: 100%; }
   .stats { grid-template-columns: 1fr; padding: 0 14px 14px; }
@@ -275,3 +210,8 @@ textarea { resize: vertical; }
 }
 
 @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
+a.start-button, a.taskbar-button {
+  color: inherit;
+  text-decoration: none;
+}
