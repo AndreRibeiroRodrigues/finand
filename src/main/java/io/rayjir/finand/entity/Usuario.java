@@ -1,5 +1,6 @@
 package io.rayjir.finand.entity;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -8,17 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -26,8 +19,11 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(nullable = false)
-    private String nome;
-
+    @Column(length = 20, nullable = false, unique = true)
+    private String username;
+    @Column(length = 300, nullable = false)
+    private String Password;
+    @Column(name = "roles")
+    private List<String> roles;
 
 }

@@ -1,6 +1,7 @@
 package io.rayjir.finand.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,11 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 @Table(name="despesas")
 public class Despesa {
