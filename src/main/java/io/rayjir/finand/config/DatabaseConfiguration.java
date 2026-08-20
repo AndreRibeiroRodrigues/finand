@@ -28,7 +28,7 @@ public class DatabaseConfiguration {
         config.setPassword(password);
         config.setDriverClassName(driver);
 
-        config.setMaximumPoolSize(5);
+        config.setMaximumPoolSize(2);
         config.setMinimumIdle(5);
         config.setIdleTimeout(30000);
         config.setConnectionTimeout(20000);
