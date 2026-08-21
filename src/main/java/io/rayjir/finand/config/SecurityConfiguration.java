@@ -23,16 +23,18 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(configurer ->{
-                    configurer.loginPage("/login").permitAll().defaultSuccessUrl("/", true);
+                    configurer.loginPage("/login")
+                            .defaultSuccessUrl("/", true)
+                            .permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->{
                     authorize.requestMatchers(
-                        "/css/**",
-                        "/js/**",
-                        "/images/**"
+                            "/login",
+                            "/css/**",
+                            "/js/**",
+                            "/images/**"
                     ).permitAll();
-                    authorize.requestMatchers("login").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .build();
