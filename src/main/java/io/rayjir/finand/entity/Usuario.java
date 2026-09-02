@@ -23,7 +23,7 @@ public class Usuario {
     private String username;
     @Column(length = 300, nullable = false)
     private String Password;
-    @Column(name = "roles")
+    @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
 
 }

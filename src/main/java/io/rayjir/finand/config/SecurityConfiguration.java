@@ -24,9 +24,13 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(configurer ->{
                     configurer.loginPage("/login")
+                            .failureUrl("/login?error")
                             .defaultSuccessUrl("/", true)
                             .permitAll();
                 })
+                .logout(configurer -> configurer
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->{
                     authorize.requestMatchers(

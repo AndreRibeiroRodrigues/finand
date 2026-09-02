@@ -17,28 +17,17 @@
   }
 
   form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
     const username = $('#loginUsername').value.trim();
     const password = $('#loginPassword').value;
 
     if (!username || !password) {
+      event.preventDefault();
       error.textContent = 'Preencha o usuário e a senha.';
       error.hidden = false;
       return;
     }
-   
+
     error.hidden = true;
-
-    // Login temporário/local.
-    // Quando o backend de autenticação estiver pronto, substitua esta parte
-    // por um fetch para /api/auth/login.
-    // sessionStorage.setItem(SESSION_KEY, username);
-
-    $('#loginPassword').value = '';
-    showToast(`Bem-vindo, ${username}.`);
-
-    // window.location.href = 'index.html';
   });
 
   function updateClock() {

@@ -44,7 +44,12 @@
             <input id="loginPassword" name="password" type="password" autocomplete="current-password" maxlength="100" required>
           </label>
 
-          <p class="login-error" id="loginError" role="alert" hidden></p>
+          <p class="login-error" id="loginError" role="alert"
+             th:text="${param.error != null} ? 'Usuário ou senha inválidos.' : ''"
+             th:hidden="${param.error == null}"></p>
+          <p class="login-success" role="status"
+             th:text="${param.logout != null} ? 'Sessão encerrada com sucesso.' : ''"
+             th:hidden="${param.logout == null}"></p>
           <button class="button button-primary" type="submit">Entrar</button>
         </form>
       </div>

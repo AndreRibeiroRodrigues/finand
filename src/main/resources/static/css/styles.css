@@ -163,6 +163,7 @@ footer { padding: 0 20px 14px; color: #444; font-size: .7rem; text-align: center
   box-shadow: 0 -5px 14px rgba(0,0,0,.3);
 }
 .start-button, .taskbar-button, .taskbar-clock { height: 44px; border: 3px outset #fff; background: var(--silver); }
+.logout-form { margin: 0; }
 .start-button { display: flex; align-items: center; gap: 7px; padding: 0 12px; font-weight: 900; cursor: pointer; }
 .windows-mark { color: var(--navy); font-size: 1.35rem; }
 .taskbar-divider { width: 3px; height: 42px; border-left: 2px solid #777; border-right: 1px solid #fff; }

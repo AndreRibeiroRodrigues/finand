@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Controle de finanças pessoal em estilo Windows 95.">
   <title>Finanças 95 — Despesas</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
@@ -67,10 +67,14 @@
   </main>
 
   <nav class="taskbar" aria-label="Barra de tarefas">
-    <a class="start-button" href="login.html" aria-label="Sair e voltar ao login"><span class="windows-mark">▦</span> Sair</a>
+    <form class="logout-form" method="post" th:action="@{/logout}">
+      <button class="start-button" type="submit" aria-label="Sair e voltar ao login">
+        <span class="windows-mark">▦</span> Sair
+      </button>
+    </form>
     <div class="taskbar-divider" aria-hidden="true"></div>
     <div class="taskbar-apps">
-      <a class="taskbar-button active" href="index.html" aria-label="Abrir Despesas" title="Despesas">
+      <a class="taskbar-button active" th:href="@{/}" aria-label="Abrir Despesas" title="Despesas">
         <span class="task-icon expenses-task-icon" aria-hidden="true">$</span><span>Despesas</span>
       </a>
     </div>
@@ -105,6 +109,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="script.js"></script>
+  <script th:src="@{/js/script.js}"></script>
 </body>
 </html>
