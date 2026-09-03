@@ -25,5 +25,4 @@ public class Usuario {
     private String Password;
     @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
-
 }

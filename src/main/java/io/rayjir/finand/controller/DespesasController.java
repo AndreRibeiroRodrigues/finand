@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/despesas")
-public class FinanceiroController {
+public class DespesasController {
 
     private final FinanceiroRepository financeiroRepository;
 
-    public FinanceiroController(FinanceiroRepository financeiroRepository) {
+    public DespesasController(FinanceiroRepository financeiroRepository) {
         this.financeiroRepository = financeiroRepository;
     }
 

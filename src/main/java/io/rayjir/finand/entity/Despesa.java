@@ -42,5 +42,4 @@ public class Despesa {
     private FormaPagamento paymentMethod;
     @Column()
     private String observation;
-
 }
