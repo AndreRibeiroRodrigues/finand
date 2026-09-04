@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                             "/images/**"
                     ).permitAll();
                     authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET, "/api/despesas").hasRole("USER", "ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/api/despesas").hasRole("USER");
                     authorize.anyRequest().authenticated();
                 })
                 .build();
